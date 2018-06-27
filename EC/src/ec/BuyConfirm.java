@@ -41,7 +41,11 @@ public class BuyConfirm extends HttpServlet {
 			bdb.setTotalPrice(totalPrice);
 			bdb.setDelivertMethodId(userSelectDMB.getId());
 
+			String dmdbName = userSelectDMB.getName();
+			bdb.setDeliveryMethodName(dmdbName);
 
+			int dmdbPrice = userSelectDMB.getPrice();
+			bdb.setDeliveryMethodPrice(dmdbPrice);
 
 			//購入確定で利用
 			session.setAttribute("bdb", bdb);
