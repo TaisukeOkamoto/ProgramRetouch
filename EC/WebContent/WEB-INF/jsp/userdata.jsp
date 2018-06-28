@@ -62,20 +62,24 @@
 								</tr>
 							</thead>
 							<tbody>
-
+							<c:forEach var="data" items="${userData}">
 								<tr>
+									<td class="center"><a href="UserBuyHistoryDetail?buy_id=${data.buyId}" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
+ 									<td class="center">${data.getFormatDate()}</td>
+									<td class="center">${data.deliveryMethodName}</td>
+									<td class="center">${data.totalPrice}</td>
+								</tr>
+							</c:forEach>
+<%--   								<tr>
 									<td class="center"><a href="UserBuyHistoryDetail?buy_id=1" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
 									<td class="center">1234年56月78日90時12分</td>
 									<td class="center">サンプル配送料金</td>
-									<td class="center"><123456789円円</td>
-								</tr>
-								<tr>
-									<td class="center"><a href="UserBuyHistoryDetail?buy_id=2" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
-									<td class="center">1234年56月78日90時12分</td>
-									<td class="center">サンプル配送料金</td>
-									<td class="center"><123456789円円</td>
-								</tr>
-
+									<td class="center">123456789円円</td>
+									<td class="center"><a href="UserBuyHistoryDetail?buy_id=${bdl.id}" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
+									<td class="center">${bdl.buyDate}</td>
+									<td class="center">${bdl.deliveryMethodPrice}</td>
+									<td class="center">${bdl.totalPrice}</td>
+ 								</tr> --%>
 							</tbody>
 						</table>
 					</div>
