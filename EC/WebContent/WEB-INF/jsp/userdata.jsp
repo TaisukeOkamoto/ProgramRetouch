@@ -67,7 +67,7 @@
 									<td class="center"><a href="UserBuyHistoryDetail?buy_id=${data.buyId}" class="btn-floating btn waves-effect waves-light "> <i class="material-icons">details</i></a></td>
  									<td class="center">${data.getFormatDate()}</td>
 									<td class="center">${data.deliveryMethodName}</td>
-									<td class="center">${data.totalPrice}</td>
+									<td class="center">${data.totalPrice + data.deliveryMethodPrice}円</td>
 								</tr>
 							</c:forEach>
 <%--   								<tr>

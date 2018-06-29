@@ -11,6 +11,7 @@ import java.util.Date;
 
 import base.DBManager;
 import beans.BuyDataBeans;
+import beans.BuyDetailDataBeans;
 
 /**
  *
@@ -137,13 +138,14 @@ public class BuyDAO {
 		try {
 			con = DBManager.getConnection();
 
-			st = con.prepareStatement("SELECT create_date,total_price,name,buy_id FROM t_buy"
+			st = con.prepareStatement("SELECT create_date,total_price,name,price,buy_id FROM t_buy"
 										+ " JOIN t_buy_detail"
 										+ " ON t_buy.id = t_buy_detail.buy_id"
 										+ " JOIN m_delivery_method"
 										+ " ON m_delivery_method.id = t_buy.delivery_method_id"
 										+ " WHERE t_buy.user_id = ?"
-										+ " GROUP BY t_buy_detail.buy_id");
+										+ " GROUP BY t_buy_detail.buy_id"
+										+ " ORDER BY create_date DESC");
 
 			st.setInt(1, userId);
 			ResultSet rs = st.executeQuery();
@@ -154,12 +156,50 @@ public class BuyDAO {
 				Date buyDate = rs.getTimestamp("create_date");
 				int totalPrice = rs.getInt("total_price");
 				String deliveryMethodName = rs.getString("name");
+				int deliveryMethodPrice = rs.getInt("price");
 				int buyId = rs.getInt("buy_id");
-				BuyDataBeans user = new BuyDataBeans(userId,buyDate,totalPrice,deliveryMethodName,buyId);
+				BuyDataBeans user = new BuyDataBeans(userId,buyDate,totalPrice,deliveryMethodName,deliveryMethodPrice,buyId);
 				BuyDataList.add(user);
 			}
 
 			return BuyDataList;
+
+		} catch (SQLException e) {
+			System.out.println(e.getMessage());
+			throw new SQLException(e);
+		} finally {
+			if (con != null) {
+				con.close();
+			}
+		}
+	}
+
+	//購入した商品の商品名、単価のリストを取得
+	public static ArrayList<BuyDetailDataBeans> getItemNamePrice(int buyId) throws SQLException {
+		Connection con = null;
+		PreparedStatement st = null;
+		try {
+			con = DBManager.getConnection();
+
+			st = con.prepareStatement("SELECT m_item.name,m_item.price"
+										+ " FROM m_item"
+										+ " JOIN t_buy_detail"
+										+ " ON m_item.id = t_buy_detail.item_id"
+										+ " WHERE buy_id = ?");
+
+			st.setInt(1, buyId);
+			ResultSet rs = st.executeQuery();
+
+			ArrayList<BuyDetailDataBeans> BuyDetailDataList = new ArrayList<BuyDetailDataBeans>();
+
+			while(rs.next()) {
+				String itemName = rs.getString("name");
+				int itemPrice = rs.getInt("price");
+				BuyDetailDataBeans user = new BuyDetailDataBeans(itemName,itemPrice,buyId);
+				BuyDetailDataList.add(user);
+			}
+
+			return BuyDetailDataList;
 
 		} catch (SQLException e) {
 			System.out.println(e.getMessage());

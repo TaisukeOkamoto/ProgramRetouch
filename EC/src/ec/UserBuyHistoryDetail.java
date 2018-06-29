@@ -2,6 +2,7 @@ package ec;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -10,6 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import beans.BuyDataBeans;
+import beans.BuyDetailDataBeans;
 import dao.BuyDAO;
 
 /**
@@ -27,7 +29,9 @@ public class UserBuyHistoryDetail extends HttpServlet {
 		int buyIdInt = Integer.parseInt(buyId);
 		try {
 			BuyDataBeans BuyData = BuyDAO.getBuyDataBeansByBuyId(buyIdInt);
+			ArrayList<BuyDetailDataBeans> BuyDetailDataList = BuyDAO.getItemNamePrice(buyIdInt);
 			request.setAttribute("BuyData", BuyData);
+			request.setAttribute("BuyDetailDataList", BuyDetailDataList);
 		} catch (SQLException e) {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();

@@ -1,6 +1,7 @@
 package beans;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 
 /**
@@ -12,6 +13,19 @@ public class BuyDetailDataBeans  implements Serializable {
 	private int id;
 	private int buyId;
 	private int itemId;
+	private String itemName;
+	private int itemPrice;
+	private ArrayList<BuyDetailDataBeans> BuyDetailDataList;
+
+	public BuyDetailDataBeans() {
+
+	}
+
+	public BuyDetailDataBeans(String itemName,int itemPrice,int buyId){
+		this.itemName = itemName;
+		this.itemPrice = itemPrice;
+		this.buyId = buyId;
+	}
 
 	public int getId() {
 		return id;
@@ -30,5 +44,29 @@ public class BuyDetailDataBeans  implements Serializable {
 	}
 	public void setItemId(int itemId) {
 		this.itemId = itemId;
+	}
+
+	public String getItemName() {
+		return itemName;
+	}
+
+	public void setItemName(String itemName) {
+		this.itemName = itemName;
+	}
+
+	public int getItemPrice() {
+		return itemPrice;
+	}
+
+	public void setItemPrice(int itemPrice) {
+		this.itemPrice = itemPrice;
+	}
+
+	public ArrayList<BuyDetailDataBeans> getBuyDetailDataList() {
+		return BuyDetailDataList;
+	}
+
+	public void setBuyDetailDataList(ArrayList<BuyDetailDataBeans> buyDetailDataList) {
+		BuyDetailDataList = buyDetailDataList;
 	}
 }
